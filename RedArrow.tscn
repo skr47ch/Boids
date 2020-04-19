@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/triangle_white.png" type="Texture" id=1]
+[ext_resource path="res://RedArrow.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 3.0
+
+[node name="RedArrow" type="Node2D"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="RedArrow" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RedArrow"]
+position = Vector2( 0, -0.1 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="RedArrow"]
+modulate = Color( 0.960784, 0.0156863, 0.0156863, 1 )
+scale = Vector2( 0.6, 0.5 )
+texture = ExtResource( 1 )
+
+[node name="Visibility" type="Area2D" parent="RedArrow"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RedArrow/Visibility"]
+[connection signal="body_entered" from="RedArrow/Visibility" to="RedArrow" method="_on_Visibility_body_entered"]
+[connection signal="body_exited" from="RedArrow/Visibility" to="RedArrow" method="_on_Visibility_body_exited"]
