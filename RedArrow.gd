@@ -3,6 +3,7 @@ extends KinematicBody2D
 export (int) var detect_radius = 100
 var vis_color = Color(.867, .91, .247, .1)
 var laser_color = Color(1.0, .329, .298)
+var laser_color2 = Color(.312, 1.0, .298)
 var targets = []
 var hit_pos
 var rot = 0
@@ -21,17 +22,18 @@ func _process(delta):
 
 func move():
 	# calculate angle to swerve
-	# for target in targets:
-		
 	
 	pass
 
 
 
 func _draw():
-	draw_circle(Vector2(), detect_radius, vis_color)
+	var my_rotation = -self.get_global_transform().get_rotation()
+	# draw_circle(Vector2(), detect_radius, vis_color)
 	for target in targets:
-		draw_line(Vector2(), (target.get_global_position() - self.get_global_position()).rotated(0), laser_color)
+		var target_point = (target.get_global_position() - self.get_global_position()).rotated(my_rotation)
+		if	Vector2().distance_to(target_point) <= detect_radius:
+			draw_line(Vector2(), target_point, laser_color2)
 
 func remain_in_view():
 	
@@ -61,12 +63,10 @@ func _on_Visibility_body_entered(body):
 			return
 			
 	targets.append(target)
-	target.modulate = Color(0, 1, 0)
 
 func _on_Visibility_body_exited(body):
 	var target = body
 	for item in targets:
 		if target == item:
 			targets.erase(item)
-			target.modulate = Color(1, 1, 1)
 

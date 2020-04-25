@@ -8,8 +8,8 @@ func _ready():
 	var screen_size = get_viewport().get_visible_rect().size
 	
 
-	for i in range(0, 40):
-		var arrow = arrowscene.instance()
+	for i in range(0, 35):
+		var arrow = redarrowscene.instance()
 		rand.randomize()
 		var x = rand.randf_range(0, screen_size.x)
 		rand.randomize()
@@ -25,5 +25,6 @@ func _ready():
 	var y = screen_size.y/2
 	
 	redarrow.set_rotation(0)
+	redarrow.set_rotation(rand.randf_range(0, 90))
 	redarrow.position = Vector2(x, y)
 	add_child(redarrow)
